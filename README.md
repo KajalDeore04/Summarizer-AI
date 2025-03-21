@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Summarizer AI
 
-## Getting Started
+Summarizer AI is an advanced text summarization tool that provides clear, structured summaries with key insights. Built with modern technologies, it ensures secure file handling, responsive design, and optimized performance.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Clear and structured summaries with key points and insights
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Interactive summary viewer with progress tracking
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Secure file handling and processing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Protected routes and API endpoints
 
-## Learn More
+- Flexible pricing plans (Basic and Pro)
 
-To learn more about Next.js, take a look at the following resources:
+- Webhook implementation for Stripe events
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- User dashboard for managing summaries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Responsive design for both mobile and desktop
 
-## Deploy on Vercel
+- Real-time updates and path revalidation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Production-ready deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Toast notifications for upload status, processing updates, and error handling
+
+- Performance optimizations
+
+- SEO-friendly summary generation
+
+- Markdown export for easy blog post conversion
+
+## Technologies Used
+
+### Core Technologies
+
+- **Next.js 15**: Server-side rendering, routing, and API endpoints with Server Components and Server Actions
+
+- **React 19**: Interactive UI with reusable components
+
+- **Clerk**: Secure authentication with Passkeys, GitHub, and Google Sign-in
+
+- **GPT-4**: AI-powered summarization with contextual understanding
+
+- **Langchain**: PDF parsing, text extraction, and document chunking
+
+- **ShadCN UI**: Accessible and customizable React components
+
+- **NeonDB (PostgreSQL)**: Serverless database for storing summaries and user data
+
+- **UploadThing**: Secure PDF uploads (up to 32MB) and file management
+
+- **Stripe**: Subscription management, cancellations, and secure payment processing
+
+- **Toast Notifications**: User feedback for updates and errors
+
+- **TypeScript**: Static typing for better development experience
+
+- **TailwindCSS 4**: Utility-first, responsive styling
+
+- **Vercel**: Deployment platform for scalability and speed
+
+## Installation and Setup
+
+1\. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/summarizer-ai.git
+   cd summarizer-ai
+   ```
+
+2\. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3\. Create an `.env` file
+
+4\. Run the development server:
+
+   ```sh
+   npm run dev
+   ```
+
+5\. Open `http://localhost:3000` in your browser.
+
+
+## Contributing
+
+Contributions are welcome. Please open an issue or submit a pull request with improvements.
+
+## License
+
+This project is licensed under the MIT License.
+
+For any issues or inquiries, please contact [your.email@example.com].
