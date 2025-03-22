@@ -47,6 +47,6 @@ export const UploadFormInput = forwardRef<
   );
 });
 
-// UploadFormInput.displayName = "UploadFormInput";
+UploadFormInput.displayName = "UploadFormInput";
 
 export default UploadFormInput;
