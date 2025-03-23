@@ -40,7 +40,8 @@ export default function UploadForm() {
         ),
       });
     },
-    onUploadBegin: ({ file }) => {
+    // Remove unused destructuring if not used:
+    onUploadBegin: () => {
       console.log("upload has begun for file");
     },
   });
@@ -54,16 +55,16 @@ export default function UploadForm() {
 
       if (!file) {
         console.error("No file selected");
+        setIsLoading(false);
         return;
       }
 
-      const validedFields = schema.safeParse({ file });
-      if (!validedFields.success) {
+      const validatedFields = schema.safeParse({ file });
+      if (!validatedFields.success) {
         toast("❌ Something went Wrong", {
           description: (
             <span className="text-red-500 font-semibold">
-              {validedFields.error.flatten().fieldErrors.file?.[0] ??
-                "Invalid File"}
+              {validatedFields.error.flatten().fieldErrors.file?.[0] ?? "Invalid File"}
             </span>
           ),
         });
@@ -79,8 +80,9 @@ export default function UploadForm() {
         ),
       });
 
+      // Upload and ensure we have exactly one file in the array
       const res = await startUpload([file]);
-      if (!res) {
+      if (!res || res.length === 0) {
         toast("⚠️ Something Went Wrong", {
           description: (
             <span className="text-red-500 font-semibold">
@@ -92,6 +94,18 @@ export default function UploadForm() {
         return;
       }
 
+      // Transform the uploaded file data to match the expected structure.
+      const [uploadResult] = res;
+      const transformedUpload = {
+        serverData: {
+          userId: uploadResult.serverData.userId,
+          file: {
+            url: uploadResult.serverData.fileUrl, // changed from nested file
+            name: file.name,
+          },
+        },
+      };
+
       toast("📃Processing PDF", {
         description: (
           <span className="text-green-500 font-semibold">
@@ -100,22 +114,22 @@ export default function UploadForm() {
         ),
       });
 
-      const result = await generatePdfSummary(res);
-
-      const { data = null, message = null } = result || {};
+      // Pass the transformed data (as a single-element array)
+      const result = await generatePdfSummary([transformedUpload]);
+      const { data = null } = result || {};
 
       if (data) {
         let storeResult: any;
         toast("📃Saving PDF", {
           description: (
             <span className="text-green-500 font-semibold">
-              Hang tight! We Are saving your summary! ✨
+              Hang tight! We are saving your summary! ✨
             </span>
           ),
         });
         if (data.summary) {
           storeResult = await storePdfSummaryAction({
-            fileUrl: res[0].serverData.file.ufsUrl,
+            fileUrl: transformedUpload.serverData.file.url,
             summary: data.summary,
             title: data.title,
             fileName: file.name,
@@ -132,8 +146,7 @@ export default function UploadForm() {
         router.push(`/summaries/${storeResult.data.id}`);
       }
     } catch (error) {
-      setIsLoading(false);
-      console.log("Error Occured");
+      console.log("Error Occurred", error);
       formRef.current?.reset();
     } finally {
       setIsLoading(false);
@@ -150,10 +163,7 @@ export default function UploadForm() {
       {isLoading && (
         <>
           <div className="relative">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
               <div className="w-full border-t border-gray-200 dark:border-gray-800" />
             </div>
             <div className="relative flex justify-center">
